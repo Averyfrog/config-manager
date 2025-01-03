@@ -1,0 +1,3 @@
+[kitty]
+input = ".config/config-manager/templates/kitty-colors.conf"
+output = ".config/kitty/kitty-colors-test.conf"
