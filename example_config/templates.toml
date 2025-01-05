@@ -5,3 +5,11 @@ output = ".config/kitty/colors.conf"
 [cava]
 input = ".config/config-manager/templates/cava"
 output = ".config/cava/config"
+
+[gtk3]
+input = ".config/config-manager/templates/gtk-colors.css"
+output = ".config/gtk-3.0/gtk-colors.css"
+
+[gtk4]
+input = ".config/config-manager/templates/gtk-colors.css"
+output = ".config/gtk-4.0/gtk-colors.css"
