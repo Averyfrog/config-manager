@@ -1,0 +1,7 @@
+[kitty]
+input = ".config/config-manager/templates/kitty-colors.conf"
+output = ".config/kitty/colors.conf"
+
+[cava]
+input = ".config/config-manager/templates/cava"
+output = ".config/cava/config"
