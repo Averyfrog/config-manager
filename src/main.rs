@@ -1,10 +1,6 @@
-// An attribute to hide warnings for unused code.
-#![allow(dead_code, unused)]
-
-use std::{fmt::DebugStruct, fs, path::PathBuf, process::exit};
-use homedir::{unix::my_home};
-use toml::{Table, Value};
-use xdg::BaseDirectories;
+use std::{fs, path::PathBuf, process::exit};
+use homedir::unix::my_home;
+use toml::Table;
 
 fn main() {
 
@@ -67,8 +63,6 @@ fn main() {
             .to_owned()
             .unwrap());
 
-        println!("{:?}", fs::read_to_string(&template_path));
-
         let mut template_string:String = fs::read_to_string(&template_path).expect("Template doesn't exist!");
 
         for variable in &config_variables {
@@ -76,7 +70,6 @@ fn main() {
             let variable_to_replace = format!("{{{}}}", variable.0);
 
             template_string = template_string.replace(&variable_to_replace, variable.1.as_str().to_owned().unwrap());
-            println!("{}", variable.0);
         }
 
         let mut output_path: PathBuf = PathBuf::new();
