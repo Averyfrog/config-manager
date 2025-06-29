@@ -32,13 +32,11 @@ Done! you can now run the program using `config-manager`.
 
 ## Instructions   
 
-Welcome to my very amazing instructions that I definitely didn't write at 1AM while sleep deprived purely because I decided that I wanted to share this project with people!
-
 This will be a quick (and likely awful) rundown on how to get a config up and running.
 
 Setup:
 
-You want to create a 'config-manger' folder in ur '.config' path and a 'templates' folder within that 'config-manager' folder. Then you want a 'templates.toml' file in your 'config-manager' folder. In ur 'templates.toml' file you want to create a group for each app to theme i.e:
+You want to create a 'config-manger' folder in your '.config' path and a 'templates' folder within that 'config-manager' folder. Then you want a 'templates.toml' file in your 'config-manager' folder. In your 'templates.toml' file you want to create a group for each app to theme i.e:
 
 [hyprland]
 input = ".config/config-manager/templates/hyprland-theme.conf"
@@ -117,6 +115,4 @@ color14  #{base0C}
 color15  #{base06}
 color7   #{base06}
 
-Now you should have a basic config-manager setup, run 'config-manager' in your terminal and watch as everything has new colors ooh shiny! 
-
-(this was written by @adairaa to explain why it's so shit) 
+Now you should have a basic config-manager setup, run 'config-manager' in your terminal and watch as everything has new colors. (Ooh shiny!) 
