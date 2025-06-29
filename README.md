@@ -38,14 +38,17 @@ Setup:
 
 You want to create a 'config-manger' folder in your '.config' path and a 'templates' folder within that 'config-manager' folder. Then you want a 'templates.toml' file in your 'config-manager' folder. In your 'templates.toml' file you want to create a group for each app to theme i.e:
 
+```toml
 [hyprland]
 input = ".config/config-manager/templates/hyprland-theme.conf"
 output = ".config/hypr/theme.conf"
+```
 
 You can also create a 'hook' for each app which is a bash command that will be run once the file is successfully in the directory.
 
 In your 'config-manager' folder you will also want a 'defaults.toml' for defining colors i.e:
 
+```toml
 base00 = "1e1e2e" # base
 base01 = "181825" # mantle
 base02 = "313244" # surface0
@@ -69,11 +72,13 @@ text = "cdd6f4"
 rounding = "8"
 
 wallpaper = "/home/user/Pictures/wallpapers/wallpaper.png"
+```
 
 Configuration:
    
 Now that you have the basic setup down, you can configure individual apps within your 'templates' directory. This is quite simple, you create a file for each app and then set values to certain variables, i.e:
 
+```conf
 cursor #{text}
 cursor_text_color #{base00}
 
@@ -114,5 +119,6 @@ color14  #{base0C}
 # white
 color15  #{base06}
 color7   #{base06}
+```
 
 Now you should have a basic config-manager setup, run 'config-manager' in your terminal and watch as everything has new colors. (Ooh shiny!) 
