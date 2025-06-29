@@ -1,4 +1,4 @@
-<h1 align="center">Config-Manager</h1>
+<h1 align="center">config-manager</h1>
 
 
 
