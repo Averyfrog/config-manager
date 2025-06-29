@@ -1,11 +1,4 @@
-<h1 align="center">   
-  ____             __ _             __  __                               
- / ___|___  _ __  / _(_) __ _      |  \/  | __ _ _ __   __ _  __ _  ___ _ __ 
-| |   / _ \| '_ \| |_| |/ _` |_____| |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
-| |__| (_) | | | |  _| | (_| |_____| |  | | (_| | | | | (_| | (_| |  __/ |   
- \____\___/|_| |_|_| |_|\__, |     |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
-                        |___/                                |___/       
-</h1>
+<h1 align="center">Config-Manager</h1>
 
 
 
@@ -37,7 +30,7 @@ to your `environment.systemPackages`.
 
 Done! you can now run the program using `config-manager`.
 
-Instructions:   
+## Instructions   
 
 Welcome to my very amazing instructions that I definitely didn't write at 1AM while sleep deprived purely because I decided that I wanted to share this project with people!
 
