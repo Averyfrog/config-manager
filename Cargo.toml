@@ -6,6 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dirs = "6.0.0"
 toml = "0.8"
-xdg = "2.5"
-homedir = "0.3.4"

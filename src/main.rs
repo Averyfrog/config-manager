@@ -1,47 +1,39 @@
-use std::{fs, path::PathBuf, process::exit};
-use homedir::unix::my_home;
-use toml::Table;
+use std::{fs};
+use toml::{Table};
 use std::process::Command;
 
 fn main() {
 
-    let xdg_dirs = xdg::BaseDirectories::with_prefix("config-manager").expect("idk how to even get this error");
+    let args: Vec<String> = std::env::args().collect();
+    if (args.len()-1) < 1 {
+        println!("[USAGE]");
+        println!("<program> [theme]");
+        println!();
+        std::process::exit(1);
+    }
 
-    let mut path: PathBuf = PathBuf::new();
-    // First, make it relative to the current user's home.
-    path.push(my_home()
-        .expect("no home path found!")
-        .unwrap()
-        .as_path());
-    // Second, find the default values file.
-    path.push(".config/config-manager/defaults.toml"
-        .to_owned());
+    let theme: &str = &args[1];
 
-    let input_values: String = match fs::read_to_string(&path) {
-        Ok(iv) => {
-            iv
-        }
+
+    let config_path: String = dirs::config_dir().unwrap().into_os_string().into_string().unwrap()
+    + "/config-manager/";
+    let home_path: String = dirs::home_dir().unwrap().into_os_string().into_string().unwrap()
+    + "/";
+
+
+    let input_values: String = match fs::read_to_string(config_path.clone() + "themes/" + theme +".toml") {
+        Ok(data) => data,
         Err(_) => {
-        
-            println!("Not a filepath!");
-            exit(2);
+            println!("No {} theme file found!", theme);
+            return;
         }
     };
 
-    drop(path);
-
-    let templates_path = xdg_dirs
-        .place_config_file("templates.toml")
-        .expect("cannot create configuration directory");
-
-    let templates: String = match fs::read_to_string(templates_path) {
-        Ok(iv) => {
-            iv
-        }
+    let templates: String = match fs::read_to_string(config_path.clone() + "templates.toml") {
+        Ok(data) => data,
         Err(_) => {
-        
-            println!("Not a filepath!");
-            exit(2);
+            println!("No templates file found!");
+            return;
         }
     };
 
@@ -51,45 +43,35 @@ fn main() {
     for template in templates.values() {
 
         if template.get("input") != None {
-            
-            let mut template_path: PathBuf = PathBuf::new();
 
-            // First, make it relative to the current user's home.
-            template_path.push(my_home()
-                .expect("no home path found!")
-                .unwrap()
-                .as_path());
-    
-            // Second, find the current template.
-            template_path.push(template["input"]
-                .as_str()
-                .to_owned()
-                .unwrap());
-    
-            let mut template_string:String = fs::read_to_string(&template_path).expect("Template doesn't exist!");
+            let template_path: &str = &template["input"].as_str().unwrap();
+
+            let mut template_string:String = match fs::read_to_string(home_path.clone() + template_path) {
+                Ok(data) => data,
+                Err(_) => {
+                    println!("Template {} doesn't exist!", template["input"]);
+                    return;
+                }
+            };
     
             for variable in &config_variables {
     
-                let variable_to_replace = format!("{{{}}}", variable.0);
+                let variable_to_replace = format!("{{{{{}}}}}", variable.0);
     
                 template_string = template_string.replace(&variable_to_replace, variable.1.as_str().to_owned().unwrap());
             }
     
-            let mut output_path: PathBuf = PathBuf::new();
+            let output_path: &str = &template["output"].as_str().unwrap();
+            
+            //println!("{}", home_path.clone() + output_path);
     
-            // First, make it relative to the current user's home.
-            output_path.push(my_home()
-                .expect("no home path found!")
-                .unwrap()
-                .as_path());
-    
-            // Second, find the current template.
-            output_path.push(template["output"]
-                .as_str()
-                .to_owned()
-                .unwrap());
-    
-            println!("{:?}", fs::write(output_path, template_string));
+            match fs::write(home_path.clone() + output_path, template_string) {
+                Ok(data) => data,
+                Err(_error) => {
+                    println!("File failed to write!");
+                    return;
+                } 
+            };
         }
 
         if template.get("hook") != None {
