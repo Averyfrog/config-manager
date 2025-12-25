@@ -40,7 +40,7 @@ It is recommended to have your `.config/config-manager` layed out like this:
 ```
 / .
 ├── / scripts
-│   └──  qt.sh
+│   └── . qt.sh
 ├── / templates
 │   ├── . kitty-colors.conf
 │   └── . qt-colors.colors
