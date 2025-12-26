@@ -5,11 +5,11 @@
 ### Current features:
 - 📎 Store config templates and copy them to target directories
 - 🖌️ Set variables in your templates and easily their values across all configs
+- 🖥️ Choose a 'theme' file to apply to all templates
 - ❄️ Nix flake
 
 ### Planned features:
 - 🏠 home-manager integration
-- 🖥️ Proper CLI (changing values, changing defaults)
 
 If you have any suggestions, please open an issue.
 
@@ -34,21 +34,44 @@ Done! you can now run the program using `config-manager`.
 
 This will be a quick (and likely awful) rundown on how to get a config up and running.
 
-Setup:
+### Setup
 
-You want to create a 'config-manger' folder in your '.config' path and a 'templates' folder within that 'config-manager' folder. Then you want a 'templates.toml' file in your 'config-manager' folder. In your 'templates.toml' file you want to create a group for each app to theme i.e:
-
-```toml
-[hyprland]
-input = ".config/config-manager/templates/hyprland-theme.conf"
-output = ".config/hypr/theme.conf"
+It is recommended to have your `.config/config-manager` layed out like this:
+```
+/ .
+├── / scripts
+│   └── . qt.sh
+├── / templates
+│   ├── . kitty-colors.conf
+│   └── . qt-colors.colors
+├── / themes
+│   ├── . catppuccin-latte.toml
+│   ├── . catppuccin-mocha.toml
+│   └── . rose-pine-dawn.toml
+└── . templates.toml
 ```
 
-You can also create a 'hook' for each app which is a bash command that will be run once the file is successfully in the directory.
+An example templates file: 
+```toml
+# templates.toml
 
-In your 'config-manager' folder you will also want a 'defaults.toml' for defining colors i.e:
+[kitty]
+input = ".config/config-manager/templates/kitty-colors.conf"
+output = ".config/kitty/colors.conf"
+hook = "kill -SIGUSR1 $(pgrep kitty)"
+
+[qt6]
+input = ".config/config-manager/templates/qt-colors.colors"
+output = ".local/share/color-schemes/config-manager.colors"
+hook = "/home/$USER/.config/config-manager/scripts/qt.sh"
+```
+A 'hook' is a bash command ran once the output file is successfully placed.
+
+An example theme file:
 
 ```toml
+# themes/catppuccin-mocha.toml
+
 base00 = "1e1e2e" # base
 base01 = "181825" # mantle
 base02 = "313244" # surface0
@@ -70,8 +93,6 @@ accent = "f9e2af"
 text = "cdd6f4"
 
 rounding = "8"
-
-wallpaper = "/home/user/Pictures/wallpapers/wallpaper.png"
 ```
 
 Configuration:
@@ -79,46 +100,23 @@ Configuration:
 Now that you have the basic setup down, you can configure individual apps within your 'templates' directory. This is quite simple, you create a file for each app and then set values to certain variables, i.e:
 
 ```conf
-cursor #{text}
-cursor_text_color #{base00}
+# templates/kitty-colors.conf
 
-foreground            #{text}
-background            #{base00}
-selection_foreground  #{base00}
-selection_background  #{base06}
-url_color             #{base0C}
+cursor #{{text}}
+cursor_text_color #{{base00}}
+
+foreground            #{{text}}
+background            #{{base00}}
+selection_foreground  #{{base00}}
+selection_background  #{{base06}}
+url_color             #{{base0C}}
 
 # black
-color8   #{base02}
-color0   #{base02}
+color8   #{{base02}}
+color0   #{{base02}}
 
-# red
-color1   #{base08}
-color9   #{base08}
-
-# green
-color2   #{base0B}
-color10  #{base0B}
-
-# yellow
-color3   #{base0A}
-color11  #{base0A}
-
-# blue
-color4  #{base0D}
-color12 #{base0D}
-
-# magenta
-color5   #{base08}
-color13  #{base08}
-
-# cyan
-color6   #{base0C}
-color14  #{base0C}
-
-# white
-color15  #{base06}
-color7   #{base06}
+...
 ```
+### Using
 
-Now you should have a basic config-manager setup, run 'config-manager' in your terminal and watch as everything has new colors. (Ooh shiny!) 
+run `config-manager [theme-name]` and all your configs will be updated using the matching `themes/theme-name.toml`. (Ooh shiny!) 
