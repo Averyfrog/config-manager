@@ -75,9 +75,19 @@ fn main() {
         }
 
         if template.get("hook") != None {
+
+            let mut template_string: String = template["hook"].as_str().unwrap().to_string();
+
+            for variable in &config_variables {
+    
+                let variable_to_replace = format!("{{{{{}}}}}", variable.0);
+    
+                template_string = template_string.replace(&variable_to_replace, variable.1.as_str().to_owned().unwrap());
+            }
+
             Command::new("bash")
                 .arg("-c")
-                .arg(template["hook"].as_str().to_owned().unwrap())
+                .arg(template_string)
                 .output()
                 .expect("failed to execute process").stdout;
         }
