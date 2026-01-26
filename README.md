@@ -1,6 +1,5 @@
-<h1 align="center">config-manager</h1>
-
-
+<h1 align="center">Constellate 🌌</h1>
+<h6 align="center"> link and control configuration files across your system </h6>
 
 ### Current features:
 - 📎 Store config templates and copy them to target directories
@@ -16,27 +15,27 @@ If you have any suggestions, please open an issue.
 ## Installation
 Add 
 ```nix
-config-manager = {
-  url = "github:averyfrog/config-manager";
+constellate = {
+  url = "github:averyfrog/constellate";
 };
 ```
 to your flake inputs.
 
 Next, add
 ```nix
-inputs.config-manager.packages.${system}.default
+inputs.constellate.packages.${system}.default
 ```
 to your `environment.systemPackages`.
 
-Done! you can now run the program using `config-manager`.
+Done! you can now run the program using `constellate`.
 
-## Instructions   
+## Instructions  
 
 This will be a quick (and likely awful) rundown on how to get a config up and running.
 
 ### Setup
 
-It is recommended to have your `.config/config-manager` layed out like this:
+It is recommended to have your `.config/constellate` layed out like this:
 ```
 / .
 ├── / scripts
@@ -56,14 +55,14 @@ An example templates file:
 # templates.toml
 
 [kitty]
-input = ".config/config-manager/templates/kitty-colors.conf"
+input = ".config/constellate/templates/kitty-colors.conf"
 output = ".config/kitty/colors.conf"
 hook = "kill -SIGUSR1 $(pgrep kitty)"
 
 [qt6]
-input = ".config/config-manager/templates/qt-colors.colors"
-output = ".local/share/color-schemes/config-manager.colors"
-hook = "/home/$USER/.config/config-manager/scripts/qt.sh"
+input = ".config/constellate/templates/qt-colors.colors"
+output = ".local/share/color-schemes/constellate.colors"
+hook = "/home/$USER/.config/constellate/scripts/qt.sh"
 ```
 A 'hook' is a bash command ran once the output file is successfully placed.
 
@@ -119,4 +118,6 @@ color0   #{{base02}}
 ```
 ### Using
 
-run `config-manager [theme-name]` and all your configs will be updated using the matching `themes/theme-name.toml`. (Ooh shiny!) 
+- run `constellate theme [theme-name]` and all your configs will be updated using the matching `themes/theme-name.toml`. (Ooh shiny!) 
+- `constellate var [theme-name] [variable-name]` can also be used to quickly grab a value from a theme without applying it.
+- `constellate list` will show all available themes.
