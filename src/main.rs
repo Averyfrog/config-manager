@@ -5,18 +5,18 @@ use std::process::Command;
 fn main() {
 
     let args: Vec<String> = std::env::args().collect();
-    if (args.len()-1) < 1 {
+    if (args.len()-1) < 2 {
         println!("[USAGE]");
         println!("<program> [theme]");
         println!();
         std::process::exit(1);
     }
 
-    let theme: &str = &args[1];
+    let theme: &str = &args[2];
 
 
     let config_path: String = dirs::config_dir().unwrap().into_os_string().into_string().unwrap()
-    + "/config-manager/";
+    + "/constellate/";
     let home_path: String = dirs::home_dir().unwrap().into_os_string().into_string().unwrap()
     + "/";
 
@@ -39,6 +39,11 @@ fn main() {
 
     let config_variables = input_values.parse::<Table>().unwrap();
     let templates = templates.parse::<Table>().unwrap();
+
+    if &args[1] == "var" && &args.len()-1 > 2 {
+        println!("{}", config_variables[&args[3]].as_str().to_owned().unwrap());
+        std::process::exit(1);
+    }
 
     for template in templates.values() {
 
