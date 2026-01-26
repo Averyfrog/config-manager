@@ -5,21 +5,27 @@ use std::process::Command;
 fn main() {
 
     let args: Vec<String> = std::env::args().collect();
-    if (args.len()-1) < 2 {
+    if (args.len()-1) < 1 {
         println!("[USAGE]");
-        println!("<program> [theme]");
+        println!("<program> theme [theme]");
+        println!("<program> var [theme] [variable]");
         println!();
         std::process::exit(1);
     }
-
-    let theme: &str = &args[2];
-
 
     let config_path: String = dirs::config_dir().unwrap().into_os_string().into_string().unwrap()
     + "/constellate/";
     let home_path: String = dirs::home_dir().unwrap().into_os_string().into_string().unwrap()
     + "/";
 
+    if &args[1] == "list" {
+        for entry in fs::read_dir(config_path.clone() + "themes/").unwrap() {
+            println!("{}", entry.unwrap().path().file_name().unwrap().to_str().unwrap().split_once('.').unwrap().0);//.to_str().unwrap());
+        }
+        std::process::exit(1);
+    }
+
+    let theme: &str = &args[2];
 
     let input_values: String = match fs::read_to_string(config_path.clone() + "themes/" + theme +".toml") {
         Ok(data) => data,
